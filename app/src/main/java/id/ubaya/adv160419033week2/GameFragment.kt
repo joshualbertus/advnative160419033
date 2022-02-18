@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_game.*
+import kotlin.random.Random
 
 /**
  * A simple [Fragment] subclass.
@@ -28,9 +29,33 @@ class GameFragment : Fragment() {
             val playerName = GameFragmentArgs.fromBundle(requireArguments()).playerName
             textTurn.text = "$playerName's Turn"
         }
-        buttonBack.setOnClickListener{
-            var action = GameFragmentDirections.actionMainFragment()
-            Navigation.findNavController(it).navigate(action)
+
+        var number1 = Random.nextInt(0,100)
+        var number2 = Random.nextInt(0,100)
+        textQuestion.text = "$number1 + $number2"
+
+        var point = 0
+
+        buttonSubmit.setOnClickListener{
+            var playerAnswer = editAnswer.text.toString().toInt()
+            var answer = checkAnswer(number1, number2, playerAnswer)
+            if (answer) {
+                point += 10
+                editAnswer.setText("")
+                number1 = Random.nextInt(0,100)
+                number2 = Random.nextInt(0,100)
+                textQuestion.text = "$number1 + $number2"
+            }
+            else {
+                var action = GameFragmentDirections.actionResultFragment(point)
+                Navigation.findNavController(it).navigate(action)
+            }
         }
+    }
+
+
+    fun checkAnswer(number1:Int, number2:Int, playerAnswer:Int):Boolean {
+        val answer = number1 + number2
+        return answer == playerAnswer
     }
 }

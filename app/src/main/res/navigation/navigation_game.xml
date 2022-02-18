@@ -21,13 +21,28 @@
         android:name="id.ubaya.adv160419033week2.GameFragment"
         android:label="Game Screen"
         tools:layout="@layout/fragment_game" >
+        <argument
+            android:name="playerName"
+            app:argType="string" />
+        <action
+            android:id="@+id/actionResultFragment"
+            app:destination="@id/resultFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="id.ubaya.adv160419033week2.ResultFragment"
+        android:label="fragment_result"
+        tools:layout="@layout/fragment_result" >
         <action
             android:id="@+id/actionMainFragment"
             app:destination="@id/mainFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
         <argument
-            android:name="playerName"
-            app:argType="string" />
+            android:name="playerScore"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 </navigation>
